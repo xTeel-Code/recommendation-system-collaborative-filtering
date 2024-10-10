@@ -1,1 +1,3 @@
-# recommendation-system-collaborative-filtering
+﻿# recommendation-system-collaborative-filtering
+---
+Predbezna Verzia
