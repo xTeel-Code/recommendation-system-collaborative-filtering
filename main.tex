@@ -1,19 +1,107 @@
-%Prerobit na jeden 200 slov obsiahly abstrakt
-
-
 \documentclass{article}
+\usepackage{hyperref}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{caption} % Required for removing "Table N" label
-\title{Kolaboratívne Filtrovanie na Twitteri}
+\title{Kolaboratívne Filtrovanie na X}
 \author{Samuel Benč}
 \date{Október 2024}
 
 \begin{document}
 
 \maketitle
+
 \begin{abstract}
-Kolaboratívne filtrovanie je široko používana technika odporúčaní, \\ najmä pre sociálne siete ako je Twitter či Instagram. Využíva dáta o používateľoch ako napríklad interakcie s príspevkami, sledované účty. V twitteri je toto používane na zobrazovanie príspevkov ktoré by sa mohli páčiť na základe interakcií používateľa s predošlými príspevkami, reklamy, účty, ktoré by sa mohli páčiť používateľovi a podobne. Sledovanie interakcií užívateľov ako sa lajky, komentáre alebo prezdielanie tweetov je efektívna metóda ako pracovať s pomerne riedkymi a zreteľnými údajmi a pomerne presne.Tento dokument sa zaoberá tým, ako sa na Twitteri implementuje filtrovanie založené na spolupráci, pričom
+Kolaboratívne filtrovanie je široko používana technika odporúčaní, \\ najmä pre sociálne siete ako je X či Instagram. Využíva dáta o používateľoch ako napríklad interakcie s príspevkami, sledované účty. Na X je toto používane na zobrazovanie príspevkov ktoré by sa mohli páčiť na základe interakcií používateľa s predošlými príspevkami, reklamy, účty, ktoré by sa mohli páčiť používateľovi a podobne. Sledovanie interakcií užívateľov ako sa lajky, komentáre alebo prezdielanie tweetov je efektívna metóda ako pracovať s pomerne riedkymi a zreteľnými údajmi a pomerne presne.Tento dokument sa zaoberá tým, ako sa na X implementuje filtrovanie založené na spolupráci, pričom
 zdôrazňuje jeho úlohu pri prispôsobovaní používateľovho zážitku vo vysoko dynamickom prostredí. Tento dokument približuje evolúciu, vysvetľuje princípy kolaboratívneho filtrovania taktiež aj rôzne typy kolaboratívneho filtrovania, približuje aj jeho problémy, porovnáva výhody a nevýhody.Spomínane sú aj kľučové výzvy pre vývojarský tím ako napríklad spracovanie masívnych dátových tokov či presnosť algoritmu.Pozrieme sa bližšie aj na možné kombinovanie dvoch typov kolaboratívneho filtrovania. Zamyslíme sa nad otázkou súkromia používateľov a etiky vývojárov. Na konci je priblížené zefektívnenie a škálovanie algoritmov na veľké dáta tzv. (Big data).
 \end{abstract}
+
+\section{Úvod}
+
+X je sociálna sieť kde si užívatelia pridávaju svoje fotky, píšu si správy medzi sebou alebo uverňejú príspevky v textovej forme. Systém reklám je zriadený tak že, medzi príspevky uživateľov
+sa vyobrazujú reklamy. Kolaboratívne filtrovanie je jedna z najvyužívanejších Reklamových Systémov po celom svete. Je jedna z najstarších a práve preto sú aj chyby tohto RS do podrobna preskúmané.
+\newpage
+
+\section{Princíp Kolaboratívneho Filtrovania}
+Princíp spočíva v tom že používateľ A s používateľom B tvoria používateľskú zakládňu
+ktorá na základe zhôd a podobnosti odporúča používateľovi C podobné produkty.
+spomenutá používateľská základne
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c|c}
+    Používateľská Základňa & Nový Používateľ \\
+    \hline
+       A  &  C \\
+       B
+    \end{tabular}
+    \label{tab:my_label}
+\end{table}
+\section{História Kolaboratívneho Filtrovania}
+Tento typ odporúčacieho systému vznikol ako riešenie zahltenia informácií.\\Problém zahltenia informáciami vznikol pri technologickom pokroku v 90-tych rokoch. Prvá aplikácia Kolaboratívneho Filtrovania bola používaná na filtrovanie noviniek vo svete pre používateľa.V 2000-ich rokoch vznikla aplikácia modernej techniky, začali sa používať filtrovania na základe používateľov a príspevkov (produktov), ako aj faktorizácia matíc a hybridné modely.Faktorizácia matíc slúžila na získanie kvalitných vektorov pomocou zjednodušovaním matíc.V roku 2010 s nárastom využívania neurónovych sietí 
+vzniklo neurónove kolaboratívne filtrovanie a aplikovanie neuronových sietí do odporúčacich systémov bol obrovský pokrok kvôli tomu, že zrazu KF bolo schopné hľadať aj viac komplexnejšie vzťahy než doteraz. V dnešnej dobe sa už používajú aj modely ktoré sú si vedomé kontextu ako napríklad miesto, čas, nálada a podobne 
+\section{Typy Kolaboratívneho Filtrovania}
+\begin{itemize}
+    \item Kolaboratívne Filtrovanie na základe používateľov
+    \item Kolaboratívne filtrovanie na základe príspevkov
+\end{itemize}
+\subsection{Kolaboratívne Filtrovanie na zakláde používateľov}
+Kolaboratívne Filtrovanie na zakláde používateľov je jedna z metód ktoré sa používajú. Funguje na princípe ukazovanie príspevkov ktoré nadobudli interakcie od podobných používateľov. 
+\subsection{Kolaboratívne Filtrovanie na zakláde príspevkov}
+Kolaboratívne Filtrovanie na zakláde príspevkov je navrhovanie príspevkov, ktoré sú podobné tým s ktorými používateľ v minulosti interagoval
+\cite{vsuchova2011online}
+\section{Problémy s Kolaboratívnym Filtrovaním}
+\begin{itemize}
+    \item Riedkosť dát \\
+     Alebo taktiež pod známejším pomenovaním problém studeného štartu, vzniká vtedy ak nový používateľ musí pred odporúčaním relevantného obsahu interagovať s niekoľkými príspevkami, aby sa do jeho matice dát dostali relevantné údaje.
+    \item Škálovateľnosť \\
+    Ako počet pužívateľova a príspevkov narastá, obyčajne algoritmy kolaboratívneho filtrovanie prestanú byť tak efektívne pretože väčšina aplikácií potrebuje okamžitú odpoveď.
+    \item Problém šedej a čiernej ovce.\\
+    Šedá ovca je označenie pre užívateľa ktorý nemá ustálene názory a často sa menia, preto dokým sa prispôsobí jeho obsah jeho názorom je šanca že už nie je obsah relevantný.Čierna ovca je označenie pre členov skupiny s idiosynkratickými postojmi k určitým príspevkom. Preto je takmer nemožné odporučiť im vhodné príspevky.
+    \item Synonymá \label{sec:Syn} \\ 
+    Tento problém je dosť častý keďže synonymá sú veľmi často používané,
+    ide o to že dáta ktoré su priradené k jednému názvu neplatia pre ich synonymá. Systém si ich nevie asociovať.Ako napríklad "Detský Film" a "Film pre deti" sú pre tento Odporúčací systém dve rozdielne veci.
+    \item Šilingové útoky \\
+    V odporúčacom systéme kde ľudia môžu dávať recenzie dávaju si kladné recenzie na svoje vlastné produkty a konkurencií dávajú zas negatívne recenzie.
+    \item Diverzita a problém "long tail"\\
+    Pointa KF je zvyšiť diverzitu aby sme objavili nové produkty avšak niektoré algoritmy fungujú presne opačne. Pretože tento RS odporúča produkty na základe predošlých predajov môže sa stať problém ktorý je označovaný ako "rich-get-richer" kedy už predávany produkt je odporúčany aj naďalej. Dlhý chvost anglicky "The Long Tail" je článok o problematike ponuky na internete kde jeden obchod môže ponúkať viacero rozličných produktov s menším dopytom a nie len produkty s vysokým dopytom. Internetovým podnikateľom to dáva výhodu pred konkurenciou ktorá nemá internetový predaj.
+    \\
+    \\
+    \\
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Long_tail.svg.png}
+    \caption{Long Tail}
+    \label{fig:enter-label}
+\end{figure}
+\cite{enwiki:1245251686}
+\cite{enwiki:1253872277}
+
+\section{Riešenia týchto problémov}
+Problém so synonymami vieme vyriešiť jednoducho a to priradenie skupiny slov k určitej téme alebo produktu. \\
+Problém studeného štartu má platforma X ošetrený tak, že pred prvým vstupom na platformu hneď po vytvorení používateľského účtu sa vás spýtaju na záujmy (šport, technika, hry, novinky vo svete, atď...) \ref{fig:Interests}\\
+Vieme, že tento systém nie je najoptimálnejšie riešenie pre veľke množstvo dát.Pre aplikáciu tohto systému na veľké dáta je jediná možnosť a to mať silnú výpočtovú techniku.\\
+Šilingové útoky sú najčastejšie ošetrené tak, že spolu s funkciou s ktorou prichádza hrozba šilingových útokov by mali prísť aj nejaké znevýhodnenia aby to ľudia nerobili.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Screenshot 2024-11-03 213847.png}
+    \caption{Topic Picking na X}
+    \label{fig:Interests}
+\end{figure}
+
+%domyslieť sekcie
+\section{Optimalizácia}
+Optimalizácie v tomto svete prebiehajú neustále a korporáty sa pretekajú medzi sebou kto bude mať najlepšie výsledky, usudzujem podľa
+Netflix prize kedy bola zriadená súťaž otvorená pre širokú verejenosť kto napíše najlepší algoritmus tak vyhrá finančnu odmenu.Avšak momentálne sa pracuje na ochrane tohto systému ktorý dostane nové meno a to Robust Collaborative Filtering kde sa zvýši stabilita voči manipulácií s dátami. \\
+Cross-System Collaborative Filtering je koncept ktorý je navrhnutý tak aby boli dáta jedného uživateľa použiteľne na viacero odporúčacích systémov.Tým pádom vzor preferencií by dokázal byť zovšeobecnený a mohol by byť aplikovaný kdekoľvek
+\cite{10.1145/2488388.248842}
+\\
+\\
+\\
+\\
+\section{systém WTF alebo who-to-follow na X}
+\cite{10.1145/2488388.2488433}
 \bibliography{literatura}
+\bibliographystyle{abbrv}
 \end{document}
